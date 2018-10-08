@@ -1,0 +1,46 @@
+* {
+	box-sizing: border-box;
+}
+
+.naslov {
+	background-color: black;
+	color: #bf9b30;
+	padding: 15px;
+	text-align: center;
+}
+
+.nav {
+	overflow: auto;
+}
+
+.menu {
+	float: left;
+	width: 20%;
+	text-align: center;
+}
+
+.menu a {
+	background-color: black;
+	padding: 8px;
+	margin-top: 7px;
+	display: block;
+	width: 100%;
+	color: #bf9b30;
+}
+
+.main {
+	float: left;
+	width: 80%;
+	padding: 0 20px;
+}
+
+.dno {
+	background-color: black;
+	text-align: center;
+	padding: 10px;
+	margin-top: 7px;
+}
+
+button {
+	color: #bf9b30;
+}
