@@ -7,7 +7,28 @@
     </div>
             
     <div class="main">
-        <h2>Lorum Ipsum</h2>
-        <p>Majra ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>              </div>
+        <button ng-click="queryAllKajmak()">Show All Kajmak</button>
+        <table id="all_kajmak" class="table" border="1">
+	        <thead>
+	          <th>ID</th>
+	          <th>Name</th>
+	          <th>Owner</th>
+	          <th>Animal</th>
+	          <th>Location</th>
+	          <th>Quantity</th>
+	        </tr>
+	    </thead>
+	    <tbody>
+	        <tr ng-repeat="kajmak in all_kajmak">
+	          <td>{{kajmak.Key}}</td>
+	          <td>{{kajmak.name}}</td>
+	          <td>{{kajmak.owner}}</td>
+	          <td>{{kajmak.animal}}</td>
+	          <td>{{kajmak.location}}</td>
+	          <td>{{kajmak.quantity}}</td>
+	        </tr>
+	    </tbody>
+      </table>      
     </div>
+</div>
 <div class="footer"></div>

@@ -37,6 +37,56 @@
     width:80%;
     padding:0 20px;
     height: 100%;
+    text-align: center;
+}
+
+.main button {
+    text-transform: uppercase;
+    text-align: center;
+    margin-top: 7px;
+    margin-bottom: 10px;
+    width: 40%;
+    border: none;
+    padding: 5px;
+    font-size: 25px;
+    color: black;
+    background-color: #bf9b30;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.main button:hover {
+    color: white;
+    font-weight: bold;
+}
+
+.table  {
+    margin-left: 20px;
+    margin-right: 20px;
+    color:  #b5b4bb;
+    padding: 15px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-collapse: collapse;
+}
+
+thead {
+    color: black;
+    text-transform: uppercase;
+    height: 50px;
+}
+
+tbody {
+    font-size: 20px;
+    padding: 15px;
+    background-color:  #7a777d;
+}
+
+th, tr {
+    width: 300px;
+}
+
+tr {
+    border-left: 0px solid;
+    height: 50px;
 }
 
 .footer {

@@ -15,6 +15,7 @@ formatting, and string manipulation
 * 2 specific Hyperledger Fabric specific libraries for Smart Contracts  
 */ 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"strconv"
@@ -53,15 +54,17 @@ func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response 
 	// Route to the appropriate handler function to interact with the ledger
 	if function == "initLedger" {
 		return s.initLedger(APIstub)
-	}  
+	} else if function == "queryAllKajmak" {
+		return s.queryAllKajmak(APIstub)
+	}
 	return shim.Error("Invalid Smart Contract function name.")
 }
 
 //initLedger method deifinition
 func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Response {
 	kajmak := []Kajmak{
-		Kajmak{Name: "Kajmak1", Owner: "MAjra", Location: "Vlasic", Quantity: "340g", ProductionDate: "5.10.2018", ExpirationDate: "6.10.2018"},
-		Kajmak{Name: "Kajmak2", Owner: "Dragoljuba", Location: "Nis", Quantity: "540g", ProductionDate: "5.10.2018", ExpirationDate: "6.10.2018"},
+		Kajmak{Name: "Kajmak1", Owner: "Majra", Animal: "Sheep", Location: "Vlasic", Quantity: "340g", ProductionDate: "5.10.2018", ExpirationDate: "6.10.2018"},
+		Kajmak{Name: "Kajmak2", Owner: "Dragoljuba", Animal: "Cow", Location: "Nis", Quantity: "540g", ProductionDate: "5.10.2018", ExpirationDate: "6.10.2018"},
 	}
 
 	i := 0
@@ -74,6 +77,50 @@ func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Respo
 	}
 
 	return shim.Success(nil)
+}
+
+//queryAllKajmak method definition
+func (s *SmartContract) queryAllKajmak(APIstub shim.ChaincodeStubInterface) sc.Response {
+
+	startKey := "0"
+	endKey := "999"
+
+	resultsIterator, err := APIstub.GetStateByRange(startKey, endKey)
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+	defer resultsIterator.Close()
+
+	// buffer is a JSON array containing QueryResults
+	var buffer bytes.Buffer
+	buffer.WriteString("[")
+
+	bArrayMemberAlreadyWritten := false
+	for resultsIterator.HasNext() {
+		queryResponse, err := resultsIterator.Next()
+		if err != nil {
+			return shim.Error(err.Error())
+		}
+		// Add comma before array members,suppress it for the first array member
+		if bArrayMemberAlreadyWritten == true {
+			buffer.WriteString(",")
+		}
+		buffer.WriteString("{\"Key\":")
+		buffer.WriteString("\"")
+		buffer.WriteString(queryResponse.Key)
+		buffer.WriteString("\"")
+
+		buffer.WriteString(", \"Record\":")
+		// Record is a JSON object, so we write as-is
+		buffer.WriteString(string(queryResponse.Value))
+		buffer.WriteString("}")
+		bArrayMemberAlreadyWritten = true
+	}
+	buffer.WriteString("]")
+
+	fmt.Printf("- queryAllKajmak:\n%s\n", buffer.String())
+
+	return shim.Success(buffer.Bytes())
 }
 
 /*
