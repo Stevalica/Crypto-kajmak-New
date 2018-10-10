@@ -8,7 +8,8 @@ app.config(function($routeProvider) {
         controller : "homeCtrl"
     })
     .when("/createKajmak", {
-        templateUrl: "createKajmak.html"
+        templateUrl: "createKajmak.html",
+        controller : "createKajmakCtrl"
     })
     .when("/listKajmak", {
         templateUrl : "listKajmak.html",
@@ -22,6 +23,16 @@ app.config(function($routeProvider) {
 app.controller("homeCtrl", function($scope) {
     $scope.start = function() {
         console.log("kliknuto");
+    }
+});
+
+app.controller("createKajmakCtrl", function($scope,appFactory) {
+    $scope.recordKajmak = function() {
+        console.log("kliknuto recordKajmak");
+        appFactory.recordKajmak($scope.kajmak, function(data){
+            //$scope.create_kajmak = data;
+            console.log("U redu");
+        });
     }
 });
 
@@ -50,6 +61,14 @@ app.factory('appFactory', function($http){
     factory.queryAllKajmak = function(callback){
         console.log("uslo");
         $http.get('/get_all_kajmak/').success(function(output){
+            callback(output)
+        });
+    }
+
+    factory.recordKajmak = function(data, callback) {
+        data.expirationDate = data.productionDate + "M";
+        var kajmak = data.id + "-" + data.name + "-" + data.owner + "-" + data.animal + "-" + data.location + "-" + data.quantity + "-" + data.productionDate + "-" + data.expirationDate;
+        $http.get('/add_kajmak/'+kajmak).success(function(output){
             callback(output)
         });
     }

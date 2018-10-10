@@ -47,14 +47,18 @@ func (s *SmartContract) Init(APIstub shim.ChaincodeStubInterface) sc.Response {
 
 //Invoke method definition
 func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response {
-
 	// Retrieve the requested Smart Contract function and arguments
 	function, args := APIstub.GetFunctionAndParameters()
 	fmt.Printf("Argumenti:", args)
 	// Route to the appropriate handler function to interact with the ledger
 	if function == "initLedger" {
+		fmt.Printf("\nUslo u initLedger\n")
 		return s.initLedger(APIstub)
+	} else if function == "recordKajmak" {
+		fmt.Printf("\nUslo u recordKajmak\n")
+		return s.recordKajmak(APIstub, args)
 	} else if function == "queryAllKajmak" {
+		fmt.Printf("\nUslo u queryAllKajmak\n")
 		return s.queryAllKajmak(APIstub)
 	}
 	return shim.Error("Invalid Smart Contract function name.")
@@ -81,7 +85,6 @@ func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Respo
 
 //queryAllKajmak method definition
 func (s *SmartContract) queryAllKajmak(APIstub shim.ChaincodeStubInterface) sc.Response {
-
 	startKey := "0"
 	endKey := "999"
 
@@ -123,6 +126,47 @@ func (s *SmartContract) queryAllKajmak(APIstub shim.ChaincodeStubInterface) sc.R
 	return shim.Success(buffer.Bytes())
 }
 
+/*
+
+ * The recordKajmak method *
+
+Fisherman like Sarah would use to record each of her tuna catches. 
+
+This method takes in five arguments (attributes to be saved in the ledger). 
+
+ */
+
+func (s *SmartContract) recordKajmak(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
+
+	fmt.Printf("\nUslo u recordKajmak\n")
+
+	if len(args) != 8 {
+
+		return shim.Error("Incorrect number of arguments. Expecting 8")
+
+	}
+
+
+
+	var kajmak = Kajmak{ Name: args[1], Owner: args[2], Animal: args[3], Location: args[4], Quantity: args[5], ProductionDate: args[6], ExpirationDate: args[7] }
+
+
+
+	kajmakAsBytes, _ := json.Marshal(kajmak)
+
+	err := APIstub.PutState(args[0], kajmakAsBytes)
+
+	if err != nil {
+
+		return shim.Error(fmt.Sprintf("Failed to record tuna catch: %s", args[0]))
+
+	}
+
+
+
+	return shim.Success(nil)
+
+}
 /*
 /*
  * main function *

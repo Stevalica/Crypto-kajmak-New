@@ -14,6 +14,6 @@ docker-compose -f docker-compose.yaml kill && docker-compose -f docker-compose.y
 rm -f ~/.hfc-key-store/*
 
 # remove chaincode docker images
-docker rmi $(docker images dev-* -q)
+docker rmi -f $(docker images dev-* -q)
 
 # Your system is now clean
