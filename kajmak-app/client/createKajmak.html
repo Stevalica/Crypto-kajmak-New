@@ -1,13 +1,33 @@
 <link rel="stylesheet" type="text/css" href="createKajmak.css">
 <div class="container">
     <div class="menu">
-        <a class="active" href="#!createKajmak">create kajmak</a>
-        <a href="#!listKajmak">list kajmak</a>
-        <a href="#!mixKajmak">mix kajmak</a>
+        <a class="active" href="#createKajmak">create kajmak</a>
+        <a href="#listKajmak">list kajmak</a>
+        <a href="#mixKajmak">mix kajmak</a>
     </div>
             
     <div class="main">
-        <h2>Lorum Ipsum</h2>
-        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>              </div>
+        <h2>Create Kajmak Record</h2>
+        <form class="form">
+            Enter Kajmak ID: <br>
+            <input type="text" placeholder="Ex: 16" ng-model="kajmak.id"><br>
+            Enter Kajmak Name:<br>
+            <input type="text" placeholder="Ex: Kajmak16" ng-model="kajmak.name"><br>
+            Enter Kajmak Owner:<br>
+            <input type="text" placeholder="Ex: Majra" ng-model="kajmak.owner"><br>
+            Choose Animal:<br>
+            <select ng-model="kajmak.animal">
+                <option value="">
+                <option value="sheep">Sheep
+                <option value="cow">Cow
+                <option value="goat">Goat
+            </select><br>
+            Enter Location:<br>
+            <input type="text" placeholder="Ex: Vlasic" ng-model="kajmak.location"><br>
+            Enter Production Date:<br>
+            <input type="text" placeholder="Ex: 9.10.2018" ng-model="kajmak.productionDate"><br><br>
+            <input id="createSubmit" class="create" type="submit" value="Create" ng-click="createKajmak()">
+        </form>
     </div>
+</div>
 <div class="footer"></div>

@@ -4,11 +4,10 @@ var app = angular.module("application", ["ngRoute"]);
 app.config(function($routeProvider) {
     $routeProvider
     .when("/", {
-        templateUrl : "home.html",
-        controller: "homeCtrl"
+        templateUrl : "home.html"
     })
     .when("/createKajmak", {
-        templateUrl : "createKajmak.html"
+        templateUrl: "createKajmak.html"
     })
     .when("/listKajmak", {
         templateUrl : "listKajmak.html"
@@ -23,3 +22,9 @@ app.controller("homeCtrl", function($scope) {
         console.log("kliknuto");
     }
 });
+
+
+
+
+
+
