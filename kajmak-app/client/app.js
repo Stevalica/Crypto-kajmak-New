@@ -17,6 +17,10 @@ app.config(function($routeProvider) {
     })
     .when("/mixKajmak", {
         templateUrl : "mixKajmak.html"
+    })
+    .when("/details", {
+        templateUrl : "details.html",
+        controller : "detailsCtrl"
     });
 });
 
@@ -36,7 +40,7 @@ app.controller("createKajmakCtrl", function($scope,appFactory) {
     }
 });
 
-app.controller("listKajmakCtrl", function($scope,appFactory) {
+app.controller("listKajmakCtrl", ["$scope", "appFactory", "myService", function($scope,appFactory, myService) {
     $scope.queryAllKajmak = function() {
         console.log("listaaa");
         appFactory.queryAllKajmak(function(data){
@@ -53,7 +57,23 @@ app.controller("listKajmakCtrl", function($scope,appFactory) {
             $scope.all_kajmak = array;
         });
     }
-});
+    $scope.getDetails = function(index) {
+        var kajmakDetails = $scope.all_kajmak[index];
+        console.log(kajmakDetails);
+        myService.setJson(kajmakDetails);
+    }
+}]);
+
+
+app.controller("detailsCtrl", ["$scope", "appFactory", "myService", function($scope,appFactory, myService) {
+    $scope.myreturnedData = myService.getJson();
+    $scope.changeOwner = function(){
+        $scope.owner.id = $scope.myreturnedData.Key;
+        appFactory.changeOwner($scope.owner, function(data){
+            console.log("promijenjen vlasnik");
+        });
+    }
+}]);
 
 // Angular Factory
 app.factory('appFactory', function($http){
@@ -72,8 +92,30 @@ app.factory('appFactory', function($http){
             callback(output)
         });
     }
+
+    factory.changeOwner = function(data, callback){
+        console.log("uslo");
+        var owner = data.id + "-" + data.name;
+        $http.get('/change_owner/'+owner).success(function(output){
+            callback(output)
+        });
+    }
+
     return factory;
 });
+
+app.factory('myService', function(){
+    var myjsonObj = null;//the object to hold our data
+     return {
+     getJson:function(){
+       return myjsonObj;
+     },
+     setJson:function(value){
+      myjsonObj = value;
+     }
+     }
+});
+
 
 
 

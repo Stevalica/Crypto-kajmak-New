@@ -12,4 +12,9 @@ module.exports = function(app) {
 		console.log("zahtjev poslan");
     	kajmak.add_kajmak(req, res);
   });
+
+	app.get('/change_owner/:owner', function(req, res){
+		console.log("\nZahtjev je primljen");
+		kajmak.change_owner(req, res);
+  });
 }

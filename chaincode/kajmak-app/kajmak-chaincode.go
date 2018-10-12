@@ -60,6 +60,8 @@ func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response 
 	} else if function == "queryAllKajmak" {
 		fmt.Printf("\nUslo u queryAllKajmak\n")
 		return s.queryAllKajmak(APIstub)
+	} else if function == "changeKajmakOwner" {
+		return s.changeKajmakOwner(APIstub, args)
 	}
 	return shim.Error("Invalid Smart Contract function name.")
 }
@@ -137,36 +139,49 @@ This method takes in five arguments (attributes to be saved in the ledger).
  */
 
 func (s *SmartContract) recordKajmak(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
-
 	fmt.Printf("\nUslo u recordKajmak\n")
-
 	if len(args) != 8 {
-
 		return shim.Error("Incorrect number of arguments. Expecting 8")
-
 	}
-
-
 
 	var kajmak = Kajmak{ Name: args[1], Owner: args[2], Animal: args[3], Location: args[4], Quantity: args[5], ProductionDate: args[6], ExpirationDate: args[7] }
-
-
-
 	kajmakAsBytes, _ := json.Marshal(kajmak)
-
 	err := APIstub.PutState(args[0], kajmakAsBytes)
-
 	if err != nil {
-
 		return shim.Error(fmt.Sprintf("Failed to record tuna catch: %s", args[0]))
+	}
+	return shim.Success(nil)
+}
 
+/*
+ * The changeKajmakOwner method *
+The data in the world state can be updated with who has possession. 
+This function takes in 2 arguments, tuna id and new holder name. 
+ */
+func (s *SmartContract) changeKajmakOwner(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
+	if len(args) != 2 {
+		return shim.Error("Incorrect number of arguments. Expecting 2")
 	}
 
+	kajmakAsBytes, _ := APIstub.GetState(args[0])
+	if kajmakAsBytes == nil {
+		return shim.Error("Could not locate kajmak")
+	}
+	kajmak := Kajmak{}
 
+	json.Unmarshal(kajmakAsBytes, &kajmak)
+	// Normally check that the specified argument is a valid holder of tuna
+	// we are skipping this check for this example
+	kajmak.Owner = args[1]
 
+	kajmakAsBytes, _ = json.Marshal(kajmak)
+	err := APIstub.PutState(args[0], kajmakAsBytes)
+	if err != nil {
+		return shim.Error(fmt.Sprintf("Failed to change kajmak owner: %s", args[0]))
+	}
 	return shim.Success(nil)
-
 }
+
 /*
 /*
  * main function *

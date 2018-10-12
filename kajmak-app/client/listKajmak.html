@@ -21,7 +21,7 @@
 	    <tbody>
 	        <tr ng-repeat="kajmak in all_kajmak">
 	          <td>{{kajmak.Key}}</td>
-	          <td>{{kajmak.name}}</td>
+	          <td ng-click="getDetails($index)"><a href="#details">{{kajmak.name}}</a></td>
 	          <td>{{kajmak.owner}}</td>
 	          <td>{{kajmak.animal}}</td>
 	          <td>{{kajmak.location}}</td>

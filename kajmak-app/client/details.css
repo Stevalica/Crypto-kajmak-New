@@ -9,7 +9,7 @@
     width:20%;
     text-align:center;
     height: 100%;
-}
+  }
 
 .menu a {
     background-color:black;
@@ -18,13 +18,12 @@
     margin-top:7px;
     display:block;
     width:100%;
-    color: #bf9b30;
+    color:#bf9b30;
     text-transform: uppercase;
     text-decoration: none;
     font-weight: bold;
     height: 32%;
-}
-
+  }
 
 .menu a.active {
     background-color: #bf9b30;
@@ -40,12 +39,45 @@
     text-align: center;
 }
 
-.main button {
+.main h2 {
     text-transform: uppercase;
     text-align: center;
-    margin-top: 7px;
-    margin-bottom: 10px;
+}
+
+.details {
+    border: solid #bf9b30 3px;
+    background-color: black;
     width: 40%;
+    font-size: 20px;
+    color: #bf9b30;
+    padding-top:5px;
+    padding-left: 10px;
+    margin: 0 auto;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    text-align: left;
+}
+
+span {
+    color: #bf9b30;
+}
+
+input {
+    font-size: 20px;
+    width: 20%
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 15px;
+    padding: 2px;
+    color: black;
+    background-color: #eaeaea;
+}
+
+.sell {
+    text-align: center;
+    text-transform: uppercase;
+    width: 30%;
+    margin-top: 10px;
+    height: 40px;
     border: none;
     padding: 5px;
     font-size: 25px;
@@ -59,40 +91,6 @@
     font-weight: bold;
 }
 
-.table  {
-    margin-left: 20px;
-    margin-right: 20px;
-    color:  #b5b4bb;
-    padding: 15px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    border-collapse: collapse;
-}
-
-thead {
-    color: black;
-    text-transform: uppercase;
-    height: 50px;
-}
-
-tbody {
-    font-size: 20px;
-    padding: 15px;
-    background-color:  #7a777d;
-}
-
-th, tr {
-    width: 300px;
-}
-
-tr {
-    border-left: 0px solid;
-    height: 50px;
-}
-
-td a {
-    text-decoration: none;
-    color:  #bf9b30;
-}
 .footer {
     background-color: black;
     height: 10%;
