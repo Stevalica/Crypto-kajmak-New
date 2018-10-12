@@ -3,7 +3,7 @@
     <div class="menu">
         <a class="active" href="#createKajmak">create kajmak</a>
         <a href="#listKajmak">list kajmak</a>
-        <a href="#mixKajmak">mix kajmak</a>
+        <a href="#mixKajmak" ng-click="queryAllKajmak()">mix kajmak</a>
     </div>
             
     <div class="main">
@@ -27,7 +27,7 @@
             Enter Quantity:<br>
             <input type="text" placeholder="Ex: 900g" ng-model="kajmak.quantity"><br>
             Enter Production Date:<br>
-            <input type="text" placeholder="Ex: 9.10.2018" ng-model="kajmak.productionDate"><br><br>
+            <input type="text" placeholder="Ex: 9.10.2018" ng-model="kajmak.productionDate"><br>
             <input id="createSubmit" class="create" type="submit" value="Create" ng-click="recordKajmak()">
         </form>
     </div>

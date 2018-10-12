@@ -16,7 +16,8 @@ app.config(function($routeProvider) {
         controller : "listKajmakCtrl"
     })
     .when("/mixKajmak", {
-        templateUrl : "mixKajmak.html"
+        templateUrl : "mixKajmak.html",
+        controller : "mixKajmakCtrl"
     })
     .when("/details", {
         templateUrl : "details.html",
@@ -75,6 +76,55 @@ app.controller("detailsCtrl", ["$scope", "appFactory", "myService", function($sc
     }
 }]);
 
+app.controller("mixKajmakCtrl", ["$scope", "appFactory", "myService", function($scope,appFactory, myService) {
+    $scope.queryAllKajmak = function() {
+        console.log("listaaa");
+        appFactory.queryAllKajmak(function(data){
+            console.log("vdjksg");
+            var array = [];
+            for (var i = 0; i < data.length; i++){
+                parseInt(data[i].Key);
+                data[i].Record.Key = parseInt(data[i].Key);
+                array.push(data[i].Record);
+            }
+            array.sort(function(a, b) {
+                return parseFloat(a.Key) - parseFloat(b.Key);
+            });
+            $scope.all_kajmak = array;
+        });
+    }
+
+    $scope.getKajmak1 = function(index) {
+        var kajmak1 = $scope.all_kajmak[index];
+        myService.setKajmak1(kajmak1);
+    }
+
+    $scope.getKajmak2 = function(index) {
+        var kajmak2 = $scope.all_kajmak[index];
+        myService.setKajmak2(kajmak2);
+    }
+    $scope.mixKajmak = function() {
+        var prvi = myService.getKajmak1();
+        console.log(prvi);
+        var drugi = myService.getKajmak2();
+        console.log(drugi);
+        var newKajmak = {
+            id: (prvi.Key).toString() + (drugi.Key).toString(),
+            name: prvi.name + drugi.name, 
+            owner: prvi.owner,
+            animal: prvi.animal + drugi.animal,
+            location: prvi.location + drugi.location,
+            quantity: prvi.quantity + drugi.quantity,
+            productionDate: prvi.production_date + drugi.production_date
+        }
+        console.log(newKajmak);
+        appFactory.recordKajmak(newKajmak, function(data){
+            //$scope.create_kajmak = data;
+            console.log("U redu");
+        });
+    }
+}]);
+
 // Angular Factory
 app.factory('appFactory', function($http){
     var factory = {};
@@ -106,12 +156,26 @@ app.factory('appFactory', function($http){
 
 app.factory('myService', function(){
     var myjsonObj = null;//the object to hold our data
+    var kajmak1Obj = null;
+    var kajmak2Obj = null;
      return {
      getJson:function(){
        return myjsonObj;
      },
+     getKajmak1:function(){
+       return kajmak1Obj;
+     },
+     getKajmak2:function(){
+       return kajmak2Obj;
+     },
      setJson:function(value){
       myjsonObj = value;
+     },
+     setKajmak1:function(value){
+      kajmak1Obj = value;
+     },
+     setKajmak2:function(value){
+      kajmak2Obj = value;
      }
      }
 });

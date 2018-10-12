@@ -3,11 +3,24 @@
     <div class="menu">
         <a href="#createKajmak">create kajmak</a>
         <a href="#listKajmak">list kajmak</a>
-        <a class="active" href="#mixKajmak">mix kajmak</a>
+        <a class="active" href="#mixKajmak" ng-click="queryAllKajmak()">mix kajmak</a>
     </div>
             
     <div class="main">
-        <h2>Lorum Ipsum</h2>
-        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>              </div>
-    </div>
+        <h2>Mix Kajmak</h2>
+        <form class="form">
+            Choose First Kajmak: <br>
+            <select>
+            	<option value="">
+                <option ng-repeat="kajmak in all_kajmak" ng-click="getKajmak1($index)"> {{ kajmak.name }}
+            </select><br>
+            Choose Second Kajmak:<br>
+            <select>
+            	<option value="">
+                <option ng-repeat="kajmak in all_kajmak" ng-click="getKajmak2($index)"> {{ kajmak.name }}
+            </select><br><br>
+            <input class="mix" type="submit" value="Mix" ng-click="mixKajmak()">
+        </form>
+     </div>
+</div>
 <div class="footer"></div>
