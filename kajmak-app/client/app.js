@@ -108,14 +108,37 @@ app.controller("mixKajmakCtrl", ["$scope", "appFactory", "myService", function($
         console.log(prvi);
         var drugi = myService.getKajmak2();
         console.log(drugi);
+        var kolicina1 = Number(prvi.quantity);
+        var kolicina2 = Number(drugi.quantity);
+        var sumaKolicina = kolicina1 + kolicina2;
+
+        var parts1 = prvi.production_date.split('.');
+        var mydate1 = new Date(parts1[0], parts1[1] - 1, parts1[2]);
+
+        var parts2 = drugi.production_date.split('.');
+        var mydate2 = new Date(parts2[0], parts2[1] - 1, parts2[2]);
+        
+        var finalProductionDate = "";
+        if(mydate1 > mydate2) {
+            var year = mydate1.getFullYear().toString();
+            var month = (mydate1.getMonth() + 1).toString();
+            var day = mydate1.getDate().toString();
+            finalProductionDate = year + "." + month + "." + day;
+        }
+        else {
+            var year = mydate2.getFullYear().toString();
+            var month = (mydate2.getMonth() + 1).toString();
+            var day = mydate2.getDate().toString();
+            finalProductionDate = year + "." + month + "." + day;
+        }
         var newKajmak = {
             id: (prvi.Key).toString() + (drugi.Key).toString(),
             name: prvi.name + drugi.name, 
             owner: prvi.owner,
             animal: prvi.animal + drugi.animal,
             location: prvi.location + drugi.location,
-            quantity: prvi.quantity + drugi.quantity,
-            productionDate: prvi.production_date + drugi.production_date
+            quantity: (sumaKolicina).toString(),
+            productionDate: finalProductionDate,
         }
         console.log(newKajmak);
         appFactory.recordKajmak(newKajmak, function(data){
@@ -136,7 +159,13 @@ app.factory('appFactory', function($http){
     }
 
     factory.recordKajmak = function(data, callback) {
-        data.expirationDate = data.productionDate + "M";
+        var parts = data.productionDate.split('.');
+        var mydate = new Date(parts[0], parts[1] - 1, parts[2]);
+        mydate.setDate(mydate.getDate() + 10);
+        var year = mydate.getFullYear().toString();
+        var month = (mydate.getMonth() + 1).toString();
+        var day = mydate.getDate().toString();
+        data.expirationDate = year + "." + month + "." + day;
         var kajmak = data.id + "-" + data.name + "-" + data.owner + "-" + data.animal + "-" + data.location + "-" + data.quantity + "-" + data.productionDate + "-" + data.expirationDate;
         $http.get('/add_kajmak/'+kajmak).success(function(output){
             callback(output)

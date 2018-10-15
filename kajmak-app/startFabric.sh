@@ -1,14 +1,14 @@
-set -e    //ispise errore
+set -e
 
-export MSYS_NO_PATHCONV=1  //za windows-da ne mijenja path
+export MSYS_NO_PATHCONV=1 
 
 starttime=$(date +%s)  
 
-if [ ! -d ~/.hfc-key-store/ ]; then   //sve iz foldera crypto kopira u ubuntu home
+if [ ! -d ~/.hfc-key-store/ ]; then 
 	mkdir ~/.hfc-key-store/
 fi
 
-cd ../kajmak-network  //predji u kajmak network folder
+cd ../kajmak-network
 ./start.sh
 
 docker-compose -f ./docker-compose.yaml up -d cli
@@ -20,4 +20,4 @@ docker exec -e "CORE_PEER_LOCALMSPID=Org1MSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/g
 printf "\nU  redu \n"
 
 printf "\nTotal execution time : $(($(date +%s) - starttime)) secs ...\n\n"
-printf "\nStart with the registerAdmin.js, then registerUser.js, then server.js\n\n"
+printf "\nStart with the enrollAdmin.js, then registerUser.js, then server.js\n\n"

@@ -18,16 +18,16 @@
             Choose Animal:<br>
             <select ng-model="kajmak.animal">
                 <option value="">
-                <option value="sheep">Sheep
-                <option value="cow">Cow
-                <option value="goat">Goat
+                <option value="Sheep">Sheep
+                <option value="Cow">Cow
+                <option value="Goat">Goat
             </select><br>
             Enter Location:<br>
             <input type="text" placeholder="Ex: Vlasic" ng-model="kajmak.location"><br>
-            Enter Quantity:<br>
-            <input type="text" placeholder="Ex: 900g" ng-model="kajmak.quantity"><br>
-            Enter Production Date:<br>
-            <input type="text" placeholder="Ex: 9.10.2018" ng-model="kajmak.productionDate"><br>
+            Enter Quantity In Grams:<br>
+            <input type="text" placeholder="Ex: 900" ng-model="kajmak.quantity"><br>
+            Enter Production Date (YYYY.MM.DD):<br>
+            <input type="text" placeholder="Ex: 2018.10.12" ng-model="kajmak.productionDate"><br>
             <input id="createSubmit" class="create" type="submit" value="Create" ng-click="recordKajmak()">
         </form>
     </div>
