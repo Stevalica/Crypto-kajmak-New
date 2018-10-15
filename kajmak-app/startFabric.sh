@@ -1,14 +1,14 @@
-set -e
+set -e    //ispise errore
 
-export MSYS_NO_PATHCONV=1
+export MSYS_NO_PATHCONV=1  //za windows-da ne mijenja path
 
-starttime=$(date +%s)
+starttime=$(date +%s)  
 
-if [ ! -d ~/.hfc-key-store/ ]; then
+if [ ! -d ~/.hfc-key-store/ ]; then   //sve iz foldera crypto kopira u ubuntu home
 	mkdir ~/.hfc-key-store/
 fi
 
-cd ../kajmak-network
+cd ../kajmak-network  //predji u kajmak network folder
 ./start.sh
 
 docker-compose -f ./docker-compose.yaml up -d cli

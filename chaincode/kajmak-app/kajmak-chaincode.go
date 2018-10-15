@@ -56,7 +56,7 @@ func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response 
 		return s.initLedger(APIstub)
 	} else if function == "recordKajmak" {
 		fmt.Printf("\nUslo u recordKajmak\n")
-		return s.recordKajmak(APIstub, args)
+		return s.recordKajmak(APIstub, args) //nad smart contract funkcijom pozovi recordkajmak
 	} else if function == "queryAllKajmak" {
 		fmt.Printf("\nUslo u queryAllKajmak\n")
 		return s.queryAllKajmak(APIstub)
