@@ -64,6 +64,18 @@ app.controller("listKajmakCtrl", ["$scope", "appFactory", "myService", function(
         console.log(kajmakDetails);
         myService.setJson(kajmakDetails);
     }
+
+    $scope.deleteKajmak = function() {
+        var array = $scope.all_kajmak;
+        for (var i = 0; i < array.length; i++){
+            var parts = array[i].expiration_date.split('.');
+            var datumIsteka = new Date(parts[0], parts[1] - 1, parts[2]);
+            var trenutniDatum = new Date();
+            if(trenutniDatum > datumIsteka) {
+                console.log("Treba obrisati kajmak sa nazivom " + array[i].name);
+            }
+        }
+    }
 }]);
 
 
