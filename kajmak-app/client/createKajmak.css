@@ -83,6 +83,7 @@ input, select {
     height: 10%;
 }
 
-.footer h5 {
-    color: green;
+.footer h3 {
+    color: #aadb12;
+    text-align: center;
 }

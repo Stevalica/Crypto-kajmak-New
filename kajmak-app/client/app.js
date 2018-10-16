@@ -38,6 +38,7 @@ app.controller("createKajmakCtrl", function($scope,appFactory) {
             //$scope.create_kajmak = data;
             console.log("U redu");
         });
+        $scope.poruka = "Kajmak Created!";
     }
 });
 
@@ -145,6 +146,7 @@ app.controller("mixKajmakCtrl", ["$scope", "appFactory", "myService", function($
             //$scope.create_kajmak = data;
             console.log("U redu");
         });
+        $scope.poruka = "Kajmak Mixed Successfully!"
     }
 }]);
 

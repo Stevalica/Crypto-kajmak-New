@@ -85,3 +85,8 @@ select {
     background-color: black;
     height: 10%;
 }
+
+.footer h3 {
+    color: #aadb12;
+    text-align: center;
+}
