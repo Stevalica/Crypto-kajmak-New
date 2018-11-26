@@ -41,7 +41,7 @@ app.controller("createKajmakCtrl", function($scope,appFactory) {
         var year = trenutniDatum.getFullYear().toString();
         var month = (trenutniDatum.getMonth() + 1).toString();
         var day = trenutniDatum.getDate();
-        $scope.kajmak.productionDate = year + "." + month + "." + day;
+        $scope.kajmak.productionDate = day + "." + month + "." + year;
         appFactory.recordKajmak($scope.kajmak, function(data){
             //$scope.create_kajmak = data;
             console.log("U redu");
@@ -182,12 +182,12 @@ app.factory('appFactory', function($http){
 
     factory.recordKajmak = function(data, callback) {
         var parts = data.productionDate.split('.');
-        var mydate = new Date(parts[0], parts[1] - 1, parts[2]);
+        var mydate = new Date(parts[2], parts[1] - 1, parts[0]);
         mydate.setDate(mydate.getDate() + 10);
         var year = mydate.getFullYear().toString();
         var month = (mydate.getMonth() + 1).toString();
         var day = mydate.getDate().toString();
-        data.expirationDate = year + "." + month + "." + day;
+        data.expirationDate = day + "." + month + "." + year;
         var kajmak = data.id + "-" + data.name + "-" + data.owner + "-" + data.animal + "-" + data.location + "-" + data.quantity + "-" + data.productionDate + "-" + data.expirationDate;
         $http.get('/add_kajmak/'+kajmak).success(function(output){
             callback(output)
