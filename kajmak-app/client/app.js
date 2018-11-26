@@ -171,7 +171,13 @@ app.controller("mixKajmakCtrl", ["$scope", "appFactory", "myService", function($
             //$scope.create_kajmak = data;
             console.log("U redu");
         });
-        $scope.poruka = "Kajmak Mixed Successfully!"
+        $scope.poruka = "Kajmak Mixed Successfully!";
+        appFactory.deleteKajmak(prvi, function(data) {
+            console.log("Kajmak obrisan");
+        });
+        appFactory.deleteKajmak(drugi, function(data) {
+            console.log("Kajmak obrisan");
+        });
     }
 }]);
 
