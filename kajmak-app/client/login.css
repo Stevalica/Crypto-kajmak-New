@@ -2,39 +2,13 @@
     border: solid white 1px;
     height: 90%;
     overflow: auto;
-}
-
-.menu {
-    float:left;
-    width:20%;
-    text-align:center;
-    height: 100%;
-  }
-
-.menu a {
-    background-color:black;
-    border: solid #bf9b30 1px;
-    padding-top: 70px;
-    margin-top:7px;
-    display:block;
-    width:100%;
-    color:#bf9b30;
-    text-transform: uppercase;
-    text-decoration: none;
-    font-weight: bold;
-    height: 32%;
-  }
-
-.menu a.active {
-    background-color: #bf9b30;
-    color: white;
+    background-color: silver;
 }
 
 .main {
-    float:left;
     border: solid white 1px;
-    width:80%;
-    padding:0 20px;
+    width:100%;
+    padding:100px 20px;
     height: 100%;
     text-align: center;
 }
@@ -54,7 +28,7 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-input, select {
+input {
     font-size: 20px;
     width: 90%;
     margin-top: 10px;
@@ -64,7 +38,7 @@ input, select {
     background-color: #eaeaea;
 }
 
-.create {
+.login {
     background: #bf9b30;
     border: none;
     height: 50px;
@@ -72,7 +46,7 @@ input, select {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.create:hover {
+.login:hover {
     color: silver;
     font-weight: bold;
 }
@@ -80,9 +54,4 @@ input, select {
 .footer {
     background-color: black;
     height: 10%;
-}
-
-.footer h3 {
-    color: #aadb12;
-    text-align: center;
 }

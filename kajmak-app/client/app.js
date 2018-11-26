@@ -7,6 +7,9 @@ app.config(function($routeProvider) {
         templateUrl : "home.html",
         controller : "homeCtrl"
     })
+    .when("/login", {
+        templateUrl : "login.html"
+    })
     .when("/createKajmak", {
         templateUrl: "createKajmak.html",
         controller : "createKajmakCtrl"
@@ -34,6 +37,11 @@ app.controller("homeCtrl", function($scope) {
 app.controller("createKajmakCtrl", function($scope,appFactory) {
     $scope.recordKajmak = function() {
         console.log("kliknuto recordKajmak");
+        var trenutniDatum = new Date();
+        var year = trenutniDatum.getFullYear().toString();
+        var month = (trenutniDatum.getMonth() + 1).toString();
+        var day = trenutniDatum.getDate();
+        $scope.kajmak.productionDate = year + "." + month + "." + day;
         appFactory.recordKajmak($scope.kajmak, function(data){
             //$scope.create_kajmak = data;
             console.log("U redu");
@@ -222,8 +230,3 @@ app.factory('myService', function(){
      }
      }
 });
-
-
-
-
-
