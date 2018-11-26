@@ -8,7 +8,11 @@ app.config(function($routeProvider) {
         controller : "homeCtrl"
     })
     .when("/login", {
-        templateUrl : "login.html"
+        templateUrl : "login.html",
+        controller: "loginCtrl"
+    })
+    .when("/addUser", {
+        templateUrl : "addUser.html"
     })
     .when("/createKajmak", {
         templateUrl: "createKajmak.html",
@@ -31,6 +35,12 @@ app.config(function($routeProvider) {
 app.controller("homeCtrl", function($scope) {
     $scope.start = function() {
         console.log("kliknuto");
+    }
+});
+
+app.controller("loginCtrl", function($scope, appFactory) {
+    $scope.loginUser = function() {
+        console.log("kliknuto na login");
     }
 });
 
