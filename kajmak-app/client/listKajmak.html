@@ -7,7 +7,7 @@
     </div>
             
     <div class="main">
-        <button ng-click="queryAllKajmak()">Show All Kajmak</button>
+        <button class="query" ng-click="queryAllKajmak()">Show All Kajmak</button>
         <table id="all_kajmak" class="table" border="1">
 	        <thead>
 	          <th>ID</th>
@@ -26,10 +26,10 @@
 	          <td>{{kajmak.animal}}</td>
 	          <td>{{kajmak.location}}</td>
 	          <td>{{kajmak.quantity}}</td>
-	        </tr>
+	          <td><button class="delete" ng-click="deleteKajmak($index)"><img src="https://cdn2.iconfinder.com/data/icons/cleaning-19/30/30x30-10-512.png" alt="delete"></button></td>
+	        </tr> 
 	    </tbody>
-      </table> 
-      <button ng-click="deleteKajmak()">Delete Kajmak</button>     
+      </table>     
     </div>
 </div>
 <div class="footer"></div>

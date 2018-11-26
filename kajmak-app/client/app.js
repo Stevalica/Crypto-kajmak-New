@@ -82,17 +82,12 @@ app.controller("listKajmakCtrl", ["$scope", "appFactory", "myService", function(
         console.log(kajmakDetails);
         myService.setJson(kajmakDetails);
     }
-
-    $scope.deleteKajmak = function() {
-        var array = $scope.all_kajmak;
-        for (var i = 0; i < array.length; i++){
-            var parts = array[i].expiration_date.split('.');
-            var datumIsteka = new Date(parts[0], parts[1] - 1, parts[2]);
-            var trenutniDatum = new Date();
-            if(trenutniDatum > datumIsteka) {
-                console.log("Treba obrisati kajmak sa nazivom " + array[i].name);
-            }
-        }
+    $scope.deleteKajmak = function(index) {
+        var kajmak = $scope.all_kajmak[index];
+        console.log(kajmak);
+        appFactory.deleteKajmak(kajmak, function(data) {
+            console.log("Kajmak obrisan");
+        })
     }
 }]);
 
@@ -209,6 +204,13 @@ app.factory('appFactory', function($http){
         var owner = data.id + "-" + data.name;
         $http.get('/change_owner/'+owner).success(function(output){
             callback(output)
+        });
+    }
+
+    factory.deleteKajmak = function(data, callback) {
+        console.log("uslo u deleteKajmak");
+        $http.get('/delete_kajmak/'+data.Key).success(function(output) {
+            callback(output);
         });
     }
 

@@ -62,6 +62,8 @@ func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response 
 		return s.queryAllKajmak(APIstub)
 	} else if function == "changeKajmakOwner" {
 		return s.changeKajmakOwner(APIstub, args)
+	} else if function == "deleteKajmak" {
+		return s.deleteKajmak(APIstub, args)
 	}
 	return shim.Error("Invalid Smart Contract function name.")
 }
@@ -180,6 +182,19 @@ func (s *SmartContract) changeKajmakOwner(APIstub shim.ChaincodeStubInterface, a
 		return shim.Error(fmt.Sprintf("Failed to change kajmak owner: %s", args[0]))
 	}
 	return shim.Success(nil)
+}
+
+//deleteKajmak method definition
+func (s *SmartContract) deleteKajmak(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
+	if len(args) != 1 {
+		return shim.Error("Incorrect number of arguments. Expecting 1")
+	}
+
+	err := APIstub.DelState(args[0]);
+	if (err != nil) {
+		return shim.Error(fmt.Sprintf("Failed to delete kajmak: %s", args[0]))
+	}
+	return shim.Success(nil);
 }
 
 /*

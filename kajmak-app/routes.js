@@ -17,4 +17,9 @@ module.exports = function(app) {
 		console.log("\nZahtjev je primljen");
 		kajmak.change_owner(req, res);
   });
+
+	app.get('/delete_kajmak/:kajmakKey', function(req, res) {
+		console.log("\nZahtjev je primljen");
+		kajmak.delete_kajmak(req, res);
+	});
 }

@@ -40,7 +40,7 @@
     text-align: center;
 }
 
-.main button {
+.query {
     text-transform: uppercase;
     text-align: center;
     margin-top: 7px;
@@ -54,7 +54,7 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.main button:hover {
+.query:hover {
     color: silver;
     font-weight: bold;
 }
@@ -93,6 +93,21 @@ td a {
     text-decoration: none;
     color:  #bf9b30;
 }
+
+td img {
+    height: 50px;
+}
+
+.delete {
+    text-align: center;
+    background-color: #7a777d;
+    border: none;
+}
+
+.delete:hover {
+    background-color: #bf9b30;
+}
+
 .footer {
     background-color: black;
     height: 10%;
