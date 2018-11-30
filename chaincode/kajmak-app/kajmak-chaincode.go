@@ -190,10 +190,11 @@ func (s *SmartContract) deleteKajmak(APIstub shim.ChaincodeStubInterface, args [
 		return shim.Error("Incorrect number of arguments. Expecting 1")
 	}
 
-	err := APIstub.DelState(args[0]);
+	err := APIstub.DelState(args[0])
 	if (err != nil) {
 		return shim.Error(fmt.Sprintf("Failed to delete kajmak: %s", args[0]))
 	}
+
 	return shim.Success(nil);
 }
 

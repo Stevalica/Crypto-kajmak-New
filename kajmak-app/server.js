@@ -14,7 +14,6 @@ app.use(bodyParser.urlencoded({ extended: true })); // za stringove
 app.use(bodyParser.json());
 
 require('./routes.js')(app); //kao modul eksportovano 
-
 app.use(express.static(path.join(__dirname, './client')));
 
 var port = process.env.PORT || 8000;
