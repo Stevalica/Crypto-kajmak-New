@@ -71,8 +71,8 @@ func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response 
 //initLedger method deifinition
 func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Response {
 	kajmak := []Kajmak{
-		Kajmak{Name: "Kajmak1", Owner: "Majra", Animal: "Sheep", Location: "Vlasic", Quantity: "340", ProductionDate: "2018.10.05", ExpirationDate: "2018.10.15"},
-		Kajmak{Name: "Kajmak2", Owner: "Dragoljuba", Animal: "Cow", Location: "Nis", Quantity: "540", ProductionDate: "2018.10.06", ExpirationDate: "2018.10.16"},
+		Kajmak{Name: "Kajmak1", Owner: "Majra", Animal: "Sheep", Location: "Vlasic", Quantity: "340", ProductionDate: "05.10.2018", ExpirationDate: "15.10.2018"},
+		Kajmak{Name: "Kajmak2", Owner: "Dragoljuba", Animal: "Cow", Location: "Nis", Quantity: "540", ProductionDate: "06.10.2018", ExpirationDate: "16.10.2018"},
 	}
 
 	i := 0

@@ -139,23 +139,23 @@ app.controller("mixKajmakCtrl", ["$scope", "appFactory", "myService", function($
         var sumaKolicina = kolicina1 + kolicina2;
 
         var parts1 = prvi.production_date.split('.');
-        var mydate1 = new Date(parts1[0], parts1[1] - 1, parts1[2]);
+        var mydate1 = new Date(parts1[2], parts1[1] - 1, parts1[0]);
 
         var parts2 = drugi.production_date.split('.');
-        var mydate2 = new Date(parts2[0], parts2[1] - 1, parts2[2]);
+        var mydate2 = new Date(parts2[2], parts2[1] - 1, parts2[0]);
         
         var finalProductionDate = "";
         if(mydate1 > mydate2) {
             var year = mydate1.getFullYear().toString();
             var month = (mydate1.getMonth() + 1).toString();
             var day = mydate1.getDate().toString();
-            finalProductionDate = year + "." + month + "." + day;
+            finalProductionDate = day + "." + month + "." + year;
         }
         else {
             var year = mydate2.getFullYear().toString();
             var month = (mydate2.getMonth() + 1).toString();
             var day = mydate2.getDate().toString();
-            finalProductionDate = year + "." + month + "." + day;
+            finalProductionDate = day + "." + month + "." + year;
         }
         var newKajmak = {
             id: (prvi.Key).toString() + (drugi.Key).toString(),
