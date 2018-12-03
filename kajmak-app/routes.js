@@ -23,15 +23,4 @@ module.exports = function(app) {
 		console.log("\nZahtjev je primljen");
 		kajmak.delete_kajmak(req, res);
 	});
-
-	//pisanje notifikacija u lokalni fajl
-	app.get('/write', function(req,res){
-		var filename = "notifikacije.txt";
-		var content = "Nova notifikacija." + '\r\n';
-		fs.appendFile(filename,content,function(err) {
-			if(err) throw err;
-			console.log("Saved!");
-		});
-		res.send("Uspjesno snimljena notifikacija.");
-	});
 }
