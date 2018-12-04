@@ -1,35 +1,39 @@
 <link rel="stylesheet" type="text/css" href="listKajmak.css">
 <div class="container">
-    <div class="menu">
-        <a href="#createKajmak">create kajmak</a>
-        <a class="active" href="#listKajmak">list kajmak</a>
-        <a href="#mixKajmak">mix kajmak</a>
-    </div>
-            
-    <div class="main">
-        <button class="query" ng-click="queryAllKajmak()">Show All Kajmak</button>
-        <table id="all_kajmak" class="table" border="1">
-	        <thead>
-	          <th>ID</th>
-	          <th>Name</th>
-	          <th>Owner</th>
-	          <th>Animal</th>
-	          <th>Location</th>
-	          <th>Quantity</th>
-	        </tr>
-	    </thead>
-	    <tbody>
-	        <tr ng-repeat="kajmak in all_kajmak">
-	          <td>{{kajmak.Key}}</td>
-	          <td ng-click="getDetails($index)"><a href="#details">{{kajmak.name}}</a></td>
-	          <td>{{kajmak.owner}}</td>
-	          <td>{{kajmak.animal}}</td>
-	          <td>{{kajmak.location}}</td>
-	          <td>{{kajmak.quantity}}</td>
-	          <td><button class="delete" ng-click="deleteKajmak($index)"><img src="https://cdn2.iconfinder.com/data/icons/cleaning-19/30/30x30-10-512.png" alt="delete"></button></td>
-	        </tr> 
-	    </tbody>
-      </table>     
-    </div>
+	<div class="menu">
+		<a href="#createKajmak">create kajmak</a>
+		<a class="active" href="#listKajmak">list kajmak</a>
+		<a href="#mixKajmak">mix kajmak</a>
+	</div>
+
+	<div class="main">
+		<button class="query" ng-click="queryAllKajmak()">Show All Kajmak</button>
+		<table id="all_kajmak" class="table" border="1">
+			<thead>
+				<th>ID</th>
+				<th>Name</th>
+				<th>Owner</th>
+				<th>Animal</th>
+				<th>Location</th>
+				<th>Quantity</th>
+                <th>Status</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="kajmak in all_kajmak">
+					<td>{{kajmak.Key}}</td>
+					<td ng-click="getDetails($index)"><a href="#details">{{kajmak.name}}</a></td>
+					<td>{{kajmak.owner}}</td>
+					<td>{{kajmak.animal}}</td>
+					<td>{{kajmak.location}}</td>
+					<td>{{kajmak.quantity}}</td>
+					<td>{{kajmak.expired}}</td>
+
+					<td><button class="delete" ng-click="deleteKajmak($index)"><img src="https://cdn2.iconfinder.com/data/icons/cleaning-19/30/30x30-10-512.png"
+							 alt="delete"></button></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </div>
 <div class="footer"></div>

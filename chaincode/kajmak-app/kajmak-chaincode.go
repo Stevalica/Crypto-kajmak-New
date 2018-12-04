@@ -38,6 +38,7 @@ type Kajmak struct {
 	Quantity string `json:"quantity"`
 	ProductionDate string `json:"production_date"`
 	ExpirationDate string `json:"expiration_date"`
+	Expired bool `json:"expired"`
 }
 
 //Init method definition
@@ -71,8 +72,8 @@ func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response 
 //initLedger method deifinition
 func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Response {
 	kajmak := []Kajmak{
-		Kajmak{Name: "Kajmak1", Owner: "Majra", Animal: "Sheep", Location: "Vlasic", Quantity: "340", ProductionDate: "05.10.2018", ExpirationDate: "15.10.2018"},
-		Kajmak{Name: "Kajmak2", Owner: "Dragoljuba", Animal: "Cow", Location: "Nis", Quantity: "540", ProductionDate: "06.10.2018", ExpirationDate: "16.10.2018"},
+		Kajmak{Name: "Kajmak1", Owner: "Majra", Animal: "Sheep", Location: "Vlasic", Quantity: "340", ProductionDate: "05.10.2018.", ExpirationDate: "15.10.2018."},
+		Kajmak{Name: "Kajmak2", Owner: "Dragoljuba", Animal: "Cow", Location: "Nis", Quantity: "540", ProductionDate: "06.10.2018.", ExpirationDate: "16.10.2018." },
 	}
 
 	i := 0
