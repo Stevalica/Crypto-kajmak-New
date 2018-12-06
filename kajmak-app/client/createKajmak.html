@@ -5,7 +5,7 @@
         <a href="#listKajmak">list kajmak</a>
         <a href="#mixKajmak" ng-click="queryAllKajmak()">mix kajmak</a>
     </div>
-            
+
     <div class="main">
         <h2>Create Kajmak Record</h2>
         <form class="form">
@@ -24,11 +24,23 @@
             </select><br>
             Enter Location:<br>
             <input type="text" placeholder="Ex: Vlasic" ng-model="kajmak.location"><br>
-            Enter Expiration Date:<br>
-            <input type="text" placeholder="Ex: DD.MM.YYYY." ng-model="kajmak.expiration_date"><br>
+            
             Enter Quantity In Grams:<br>
             <input type="text" placeholder="Ex: 900" ng-model="kajmak.quantity"><br>
-            <input id="createSubmit" class="create" type="submit" value="Create" ng-click="recordKajmak()">
+            
+            Expires in:
+            <input type="text" placeholder="Ex: 6" ng-model="kajmak.number"><br>
+            
+            <select ng-model="kajmak.unit">
+                <option value="">
+                <option value="min">minutes
+                <option value="hour">hours
+                <option value="month">months
+            </select><br>
+            
+
+            
+             <input id="createSubmit" class="create" type="submit" value="Create" ng-click="recordKajmak()">
         </form>
     </div>
 </div>

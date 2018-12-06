@@ -195,6 +195,12 @@ func (s *SmartContract) deleteKajmak(APIstub shim.ChaincodeStubInterface, args [
 	if (err != nil) {
 		return shim.Error(fmt.Sprintf("Failed to delete kajmak: %s", args[0]))
 	}
+	eventPayload := "Poruka iz Event-a" 
+	payloadAsBytes := []byte(eventPayload)
+	eventErr := APIstub.SetEvent("deleteEvent",payloadAsBytes)
+	if (eventErr != nil) {
+		return shim.Error(fmt.Sprintf("Failed to emit event"))
+	}
 
 	return shim.Success(nil);
 }

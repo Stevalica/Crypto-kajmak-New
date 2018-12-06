@@ -50,11 +50,59 @@ app.controller("createKajmakCtrl", function ($scope, appFactory) {
         var trenutniDatum = new Date();
         var year = trenutniDatum.getFullYear().toString();
         var month = (trenutniDatum.getMonth() + 1).toString();
-        var day = trenutniDatum.getDate();
-        $scope.kajmak.productionDate = day + "." + month + "." + year;
+        var day = trenutniDatum.getDate().toString();
+        var hour = trenutniDatum.getHours().toString();
+        var min = trenutniDatum.getMinutes().toString();
+        var ampm = hour >= 12 ? 'pm' : 'am';
+        hour = hour % 12;
+        hour = hour ? hour : 12;
+        min = min < 10 ? '0' + min : min;
+
+
+        $scope.kajmak.productionDate = day + "." + month + "." + year + "." + " " + hour + ":" + min + ampm;
+        console.log($scope.kajmak);
+        if ($scope.kajmak.unit == "min") {
+            var m = parseInt($scope.kajmak.number);
+            var newMin = new Date();
+            newMin.setMinutes(newMin.getMinutes() + m);
+
+            min = newMin.getMinutes().toString();
+            hour = newMin.getHours().toString();
+            day = newMin.getDate().toString();
+            
+            ampm = hour >= 12 ? 'pm' : 'am';
+            hour = hour % 12;
+            hour = hour ? hour : 12;
+            min = min < 10 ? '0' + min : min;
+        }
+        else if ($scope.kajmak.unit == "hour") {
+            var h = parseInt($scope.kajmak.number);
+            var newHour = new Date();
+            newHour.setHours(newHour.getHours() + h);
+
+            hour = newHour.getHours().toString();
+            day = newHour.getDate().toString();
+            ampm = hour >= 12 ? 'pm' : 'am';
+            hour = hour % 12;
+            hour = hour ? hour : 12;
+            min = min < 10 ? '0' + min : min;
+        }
+        else {
+            var mth = parseInt($scope.kajmak.number);
+            var newMonth = new Date();
+            newMonth.setMonth((newMonth.getMonth() + 1) + mth);
+            month = newMonth.getMonth().toString();
+            year = newMonth.getFullYear().toString();
+
+        }
+
+        $scope.kajmak.expirationDate = day + "." + month + "." + year + "." + " " + hour + ":" + min + ampm;
+
+
         appFactory.recordKajmak($scope.kajmak, function (data) {
             //$scope.create_kajmak = data;
             console.log("U redu");
+
         });
         $scope.poruka = "Kajmak Created!";
     }
@@ -167,7 +215,7 @@ app.controller("mixKajmakCtrl", ["$scope", "appFactory", "myService", function (
             var day = mydate2.getDate().toString();
             finalProductionDate = day + "." + month + "." + year + ".";
         }
-        
+
 
         if (mydate3 < mydate4) {
             var year = mydate3.getFullYear().toString();
@@ -184,13 +232,13 @@ app.controller("mixKajmakCtrl", ["$scope", "appFactory", "myService", function (
         }
         var newKajmak = {
             id: (prvi.Key).toString() + (drugi.Key).toString(),
-            name: prvi.name + "&" +drugi.name,
+            name: prvi.name + "&" + drugi.name,
             owner: prvi.owner,
             animal: prvi.animal + drugi.animal,
             location: prvi.location + drugi.location,
             quantity: (sumaKolicina).toString(),
             productionDate: finalProductionDate,
-            expiration_date: finalExpirationDate,
+            expirationDate: finalExpirationDate,
 
         }
         console.log(newKajmak);
@@ -220,7 +268,7 @@ app.factory('appFactory', function ($http) {
 
     factory.recordKajmak = function (data, callback) {
 
-        var kajmak = data.id + "-" + data.name + "-" + data.owner + "-" + data.animal + "-" + data.location + "-" + data.quantity + "-" + data.productionDate + "-" + data.expiration_date;
+        var kajmak = data.id + "-" + data.name + "-" + data.owner + "-" + data.animal + "-" + data.location + "-" + data.quantity + "-" + data.productionDate + "-" + data.expirationDate;
         $http.get('/add_kajmak/' + kajmak).success(function (output) {
             callback(output)
         });
