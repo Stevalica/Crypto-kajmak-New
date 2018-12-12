@@ -90,10 +90,10 @@ app.controller("createKajmakCtrl", function ($scope, appFactory) {
         else {
             var mth = parseInt($scope.kajmak.number);
             var newMonth = new Date();
-            newMonth.setMonth((newMonth.getMonth() + 1) + mth);
-            month = newMonth.getMonth().toString();
+            newMonth.setMonth(newMonth.getMonth() + mth);
+            var monthInt = newMonth.getMonth() + 1;
+            month = monthInt.toString();
             year = newMonth.getFullYear().toString();
-
         }
 
         $scope.kajmak.expirationDate = day + "." + month + "." + year + "." + " " + hour + ":" + min + ampm;
