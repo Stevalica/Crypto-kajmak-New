@@ -59,7 +59,7 @@ app.controller("createKajmakCtrl", function ($scope, appFactory) {
         min = min < 10 ? '0' + min : min;
 
 
-        $scope.kajmak.productionDate = day + "." + month + "." + year + "." + " " + hour + ":" + min + ampm;
+        $scope.kajmak.productionDate = day + "." + month + "." + year + "." + " " + hour + ":" + min + " " + ampm;
         console.log($scope.kajmak);
         if ($scope.kajmak.unit == "min") {
             var m = parseInt($scope.kajmak.number);
@@ -69,7 +69,7 @@ app.controller("createKajmakCtrl", function ($scope, appFactory) {
             min = newMin.getMinutes().toString();
             hour = newMin.getHours().toString();
             day = newMin.getDate().toString();
-            
+
             ampm = hour >= 12 ? 'pm' : 'am';
             hour = hour % 12;
             hour = hour ? hour : 12;
@@ -87,6 +87,17 @@ app.controller("createKajmakCtrl", function ($scope, appFactory) {
             hour = hour ? hour : 12;
             min = min < 10 ? '0' + min : min;
         }
+        else if ($scope.kajmak.unit == "days") {
+            var d = parseInt($scope.kajmak.number);
+            var newDays = new Date();
+            newDays.setDate(newDays.getDate() + d);
+            day = newDays.getDate().toString();
+            var mth1 = newDays.getMonth() + 1;
+            month = mth1.toString();
+
+            year = newDays.getFullYear().toString();
+        }
+
         else {
             var mth = parseInt($scope.kajmak.number);
             var newMonth = new Date();
@@ -96,7 +107,7 @@ app.controller("createKajmakCtrl", function ($scope, appFactory) {
             year = newMonth.getFullYear().toString();
         }
 
-        $scope.kajmak.expirationDate = day + "." + month + "." + year + "." + " " + hour + ":" + min + ampm;
+        $scope.kajmak.expirationDate = day + "." + month + "." + year + "." + " " + hour + ":" + min + " " + ampm;
 
 
         appFactory.recordKajmak($scope.kajmak, function (data) {
@@ -189,47 +200,52 @@ app.controller("mixKajmakCtrl", ["$scope", "appFactory", "myService", function (
         var kolicina2 = Number(drugi.quantity);
         var sumaKolicina = kolicina1 + kolicina2;
 
-        var parts1 = prvi.production_date.split('.');
-        var mydate1 = new Date(parts1[2], parts1[1] - 1, parts1[0]);
+        var parts1 = prvi.expiration_date.split(/[\s.:]/);
+        var mydate1 = new Date(parts1[2], parts1[1] - 1, parts1[0], parts1[4], parts1[5]);
+        console.log(parts1);
 
-        var parts2 = drugi.production_date.split('.');
-        var mydate2 = new Date(parts2[2], parts2[1] - 1, parts2[0]);
-
-        var parts3 = prvi.expiration_date.split('.');
-        var mydate3 = new Date(parts3[2], parts3[1] - 1, parts3[0]);
-
-        var parts4 = drugi.expiration_date.split('.');
-        var mydate4 = new Date(parts4[2], parts4[1] - 1, parts4[0]);
+        var parts2 = drugi.expiration_date.split(/[\s.:]/);
+        var mydate2 = new Date(parts2[2], parts2[1] - 1, parts2[0], parts2[4], parts2[5]);
 
         var finalProductionDate = "";
         var finalExpirationDate = "";
-        if (mydate1 > mydate2) {
-            var year = mydate1.getFullYear().toString();
-            var month = (mydate1.getMonth() + 1).toString();
-            var day = mydate1.getDate().toString();
-            finalProductionDate = day + "." + month + "." + year + ".";
+        var current = new Date();
+        var y = current.getFullYear().toString();
+        var m = (current.getMonth() + 1).toString();
+        var d = current.getDate().toString();
+        var h = current.getHours().toString();
+        var mi = current.getMinutes().toString();
+        var ampm1 = h >= 12 ? 'pm' : 'am';
+        h = h % 12;
+        h = h ? h : 12;
+        m = m < 10 ? '0' + m : m;
+
+        finalProductionDate = d + "." + m + "." + y + "." + " " + h + ":" + mi + " " + ampm1;
+        if (mydate1 < mydate2) {
+            console.log("USlooooo");
+            var year = parts1[2];
+            var month = parts1[1];
+            var day = parts1[0];
+            var hour = parts1[4];
+            var min = parts1[5];
+            var ampm = parts1[6];
+
+            finalExpirationDate = day + "." + month + "." + year + "." + " " + hour + ":" + min + " " + ampm;
+
         }
+
         else {
-            var year = mydate2.getFullYear().toString();
-            var month = (mydate2.getMonth() + 1).toString();
-            var day = mydate2.getDate().toString();
-            finalProductionDate = day + "." + month + "." + year + ".";
+            var year = parts2[2];
+            var month = parts2[1];
+            var day = parts2[0];
+            var hour = parts2[4];
+            var min = parts2[5];
+            var ampm = parts2[6];
+
+            finalExpirationDate = day + "." + month + "." + year + "." + " " + hour + ":" + min + " " + ampm;
         }
 
 
-        if (mydate3 < mydate4) {
-            var year = mydate3.getFullYear().toString();
-            var month = (mydate3.getMonth() + 1).toString();
-            var day = mydate3.getDate().toString();
-            finalExpirationDate = day + "." + month + "." + year + ".";
-        }
-        else {
-            var year = mydate4.getFullYear().toString();
-            var month = (mydate4.getMonth() + 1).toString();
-            var day = mydate4.getDate().toString();
-            finalExpirationDate = day + "." + month + "." + year + ".";
-
-        }
         var newKajmak = {
             id: (prvi.Key).toString() + (drugi.Key).toString(),
             name: prvi.name + "&" + drugi.name,

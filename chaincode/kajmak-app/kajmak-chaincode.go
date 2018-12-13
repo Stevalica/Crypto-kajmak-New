@@ -38,7 +38,7 @@ type Kajmak struct {
 	Quantity string `json:"quantity"`
 	ProductionDate string `json:"production_date"`
 	ExpirationDate string `json:"expiration_date"`
-	Expired bool `json:"expired"`
+	
 }
 
 //Init method definition
