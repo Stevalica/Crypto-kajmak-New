@@ -8,6 +8,7 @@ var http = require('http');
 var fs = require('fs');   //citanje i pisanje fajlova
 var Fabric_Client = require('fabric-client');  
 var cron = require('node-cron');
+var schedule = require('node-schedule');
 
 var app = express();
 
@@ -19,6 +20,7 @@ app.use(express.static(path.join(__dirname, './client')));
 
 var port = process.env.PORT || 8000;
 
+/*
 //izvrsavanje taska u odredjeno vrijeme
 var brojac = 1;
 cron.schedule('* * * * *', () => {
@@ -31,6 +33,7 @@ cron.schedule('* * * * *', () => {
 	});
 	brojac++;
 });
+*/
 
 app.listen(port, function(){     //osluskuj zahtjeve na ovom portu
 	console.log("Live on port: " + port);

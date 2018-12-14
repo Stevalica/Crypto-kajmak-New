@@ -153,12 +153,7 @@ func (s *SmartContract) recordKajmak(APIstub shim.ChaincodeStubInterface, args [
 	if err != nil {
 		return shim.Error(fmt.Sprintf("Failed to record tuna catch: %s", args[0]))
 	}
-	eventPayload := "Poruka iz Event-a" 
-	payloadAsBytes := []byte(eventPayload)
-	eventErr := APIstub.SetEvent("recordEvent",payloadAsBytes)
-	if (eventErr != nil) {
-		return shim.Error(fmt.Sprintf("Failed to emit event"))
-	}
+	
 	return shim.Success(nil)
 }
 
@@ -193,22 +188,22 @@ func (s *SmartContract) changeKajmakOwner(APIstub shim.ChaincodeStubInterface, a
 
 //deleteKajmak method definition
 func (s *SmartContract) deleteKajmak(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
-	if len(args) != 1 {
-		return shim.Error("Incorrect number of arguments. Expecting 1")
+	if len(args) != 8 {
+		return shim.Error("Incorrect number of arguments. Expecting 8")
 	}
 
 	err := APIstub.DelState(args[0])
 	if (err != nil) {
 		return shim.Error(fmt.Sprintf("Failed to delete kajmak: %s", args[0]))
 	}
-	/*
-	eventPayload := "Poruka iz Event-a" 
+	
+	eventPayload := "Kajmak with ID " + args[0] + " whose owner is " + args[2] + " was deleted because it has expired on date " + args[7]
 	payloadAsBytes := []byte(eventPayload)
 	eventErr := APIstub.SetEvent("deleteEvent",payloadAsBytes)
 	if (eventErr != nil) {
 		return shim.Error(fmt.Sprintf("Failed to emit event"))
 	}
-	*/
+	
 	return shim.Success(nil);
 }
 

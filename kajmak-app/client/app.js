@@ -112,14 +112,14 @@ app.controller("createKajmakCtrl", function ($scope, appFactory) {
 
         appFactory.recordKajmak($scope.kajmak, function (data) {
             //$scope.create_kajmak = data;
-            console.log("U redu");
+            console.log("Podaci iz create kajmaka:" + data);
 
         });
         $scope.poruka = "Kajmak Created!";
     }
 });
 
-app.controller("listKajmakCtrl", ["$scope", "appFactory", "myService", function ($scope, appFactory, myService) {
+app.controller("listKajmakCtrl", ["$scope", "$interval","appFactory", "myService", function ($scope, $interval, appFactory, myService) {
     $scope.queryAllKajmak = function () {
         console.log("listaaa");
         appFactory.queryAllKajmak(function (data) {
@@ -137,6 +137,7 @@ app.controller("listKajmakCtrl", ["$scope", "appFactory", "myService", function 
         });
     }
     $scope.getDetails = function (index) {
+        console.log(index);
         var kajmakDetails = $scope.all_kajmak[index];
         console.log(kajmakDetails);
         myService.setJson(kajmakDetails);
@@ -149,8 +150,41 @@ app.controller("listKajmakCtrl", ["$scope", "appFactory", "myService", function 
         })
     }
 
+    $interval(callAtInterval, 60000);
 
+    function callAtInterval() {
+        console.log("Interval occurred");
+        var nizKajmaka = $scope.all_kajmak;
+        console.log(nizKajmaka);
+        var current = new Date();
+        var y = current.getFullYear().toString();
+        var m = (current.getMonth() + 1).toString();
+        var d = current.getDate().toString();
+        var h = current.getHours().toString();
+        var mi = current.getMinutes().toString();
+        var ampm1 = h >= 12 ? 'pm' : 'am';
+        h = h % 12;
+        h = h ? h : 12;
+        m = m < 10 ? '0' + m : m;
 
+        let finalProductionDate = d + "." + m + "." + y + "." + " " + h + ":" + mi + " " + ampm1;
+        let parts1 = finalProductionDate.split(/[\s.:]/);
+        let mydate1 = new Date(parts1[2], parts1[1] - 1, parts1[0], parts1[4], parts1[5]);
+
+        console.log(mydate1);
+        console.log(finalProductionDate);
+        for(var i = 0; i < nizKajmaka.length; i++) {
+            console.log(i);
+            var parts3 = nizKajmaka[i].expiration_date.split(/[\s.:]/);
+            var mydate4 = new Date(parts3[2], parts3[1] - 1, parts3[0], parts3[4], parts3[5]);
+            console.log(mydate4);
+            if(mydate1 >= mydate4) {
+                appFactory.deleteKajmak(nizKajmaka[i], function (data) {
+                console.log("Kajmak obrisan");
+             });
+            }
+        }
+    }
 }]);
 
 
@@ -300,7 +334,9 @@ app.factory('appFactory', function ($http) {
 
     factory.deleteKajmak = function (data, callback) {
         console.log("uslo u deleteKajmak");
-        $http.get('/delete_kajmak/' + data.Key).success(function (output) {
+        console.log(data);
+        var kjmk = data.Key + "-" + data.name + "-" + data.owner + "-" + data.animal + "-" + data.location + "-" + data.quantity + "-" + data.production_date + "-" + data.expiration_date;
+        $http.get('/delete_kajmak/' + kjmk).success(function (output) {
             callback(output);
         });
     }
