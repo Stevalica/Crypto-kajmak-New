@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 /*
-  Sample Chaincode based on Demonstrated Scenario
-
  This code is based on code written by the Hyperledger Fabric community.
   Original code can be found here: https://github.com/hyperledger/fabric-samples/blob/release/chaincode/fabcar/fabcar.go
  */
@@ -48,18 +46,12 @@ func (s *SmartContract) Init(APIstub shim.ChaincodeStubInterface) sc.Response {
 
 //Invoke method definition
 func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response {
-	// Retrieve the requested Smart Contract function and arguments
 	function, args := APIstub.GetFunctionAndParameters()
-	fmt.Printf("Argumenti:", args)
-	// Route to the appropriate handler function to interact with the ledger
 	if function == "initLedger" {
-		fmt.Printf("\nUslo u initLedger\n")
 		return s.initLedger(APIstub)
 	} else if function == "recordKajmak" {
-		fmt.Printf("\nUslo u recordKajmak\n")
-		return s.recordKajmak(APIstub, args) //nad smart contract funkcijom pozovi recordkajmak
+		return s.recordKajmak(APIstub, args)
 	} else if function == "queryAllKajmak" {
-		fmt.Printf("\nUslo u queryAllKajmak\n")
 		return s.queryAllKajmak(APIstub)
 	} else if function == "changeKajmakOwner" {
 		return s.changeKajmakOwner(APIstub, args)
@@ -72,13 +64,12 @@ func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response 
 //initLedger method deifinition
 func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Response {
 	kajmak := []Kajmak{
-		Kajmak{Name: "Kajmak1", Owner: "Majra", Animal: "Sheep", Location: "Vlasic", Quantity: "340", ProductionDate: "05.10.2018.", ExpirationDate: "15.10.2018."},
-		Kajmak{Name: "Kajmak2", Owner: "Dragoljuba", Animal: "Cow", Location: "Nis", Quantity: "540", ProductionDate: "06.10.2018.", ExpirationDate: "16.10.2018." },
+		Kajmak{Name: "Kajmak1", Owner: "Majra", Animal: "Sheep", Location: "Vlasic", Quantity: "340", ProductionDate: "05.10.2018. 10:55 am", ExpirationDate: "15.10.2019. 10:55 am"},
+		Kajmak{Name: "Kajmak2", Owner: "Dragoljuba", Animal: "Cow", Location: "Trebinje", Quantity: "540", ProductionDate: "06.10.2018. 10:56 pm", ExpirationDate: "16.10.2019. 10:56 pm" },
 	}
 
 	i := 0
 	for i < len(kajmak) {
-		fmt.Println("i is ", i)
 		kajmakAsBytes, _ := json.Marshal(kajmak[i])
 		APIstub.PutState(strconv.Itoa(i+1), kajmakAsBytes)
 		fmt.Println("Added", kajmak[i])
@@ -131,18 +122,8 @@ func (s *SmartContract) queryAllKajmak(APIstub shim.ChaincodeStubInterface) sc.R
 	return shim.Success(buffer.Bytes())
 }
 
-/*
-
- * The recordKajmak method *
-
-Fisherman like Sarah would use to record each of her tuna catches. 
-
-This method takes in five arguments (attributes to be saved in the ledger). 
-
- */
-
+//recordKajmak method definition
 func (s *SmartContract) recordKajmak(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
-	fmt.Printf("\nUslo u recordKajmak\n")
 	if len(args) != 8 {
 		return shim.Error("Incorrect number of arguments. Expecting 8")
 	}
@@ -157,11 +138,7 @@ func (s *SmartContract) recordKajmak(APIstub shim.ChaincodeStubInterface, args [
 	return shim.Success(nil)
 }
 
-/*
- * The changeKajmakOwner method *
-The data in the world state can be updated with who has possession. 
-This function takes in 2 arguments, tuna id and new holder name. 
- */
+//changeKajmakOwner method definition
 func (s *SmartContract) changeKajmakOwner(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
 	if len(args) != 2 {
 		return shim.Error("Incorrect number of arguments. Expecting 2")
@@ -174,8 +151,6 @@ func (s *SmartContract) changeKajmakOwner(APIstub shim.ChaincodeStubInterface, a
 	kajmak := Kajmak{}
 
 	json.Unmarshal(kajmakAsBytes, &kajmak)
-	// Normally check that the specified argument is a valid holder of tuna
-	// we are skipping this check for this example
 	kajmak.Owner = args[1]
 
 	kajmakAsBytes, _ = json.Marshal(kajmak)

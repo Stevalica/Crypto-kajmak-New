@@ -7,13 +7,6 @@ app.config(function ($routeProvider) {
             templateUrl: "home.html",
             controller: "homeCtrl"
         })
-        .when("/login", {
-            templateUrl: "login.html",
-            controller: "loginCtrl"
-        })
-        .when("/addUser", {
-            templateUrl: "addUser.html"
-        })
         .when("/createKajmak", {
             templateUrl: "createKajmak.html",
             controller: "createKajmakCtrl"
@@ -32,21 +25,56 @@ app.config(function ($routeProvider) {
         });
 });
 
-app.controller("homeCtrl", function ($scope) {
+app.controller("homeCtrl", function ($scope, $interval, appFactory) {
     $scope.start = function () {
-        console.log("kliknuto");
-    }
-});
+        $interval(callAtInterval, 60000);
 
-app.controller("loginCtrl", function ($scope, appFactory) {
-    $scope.loginUser = function () {
-        console.log("kliknuto na login");
+        function callAtInterval() {
+            console.log("Interval occurred");
+            var array = [];
+            appFactory.queryAllKajmak(function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    parseInt(data[i].Key);
+                    data[i].Record.Key = parseInt(data[i].Key);
+                    array.push(data[i].Record);
+                }
+                array.sort(function (a, b) {
+                    return parseFloat(a.Key) - parseFloat(b.Key);
+                });
+                var current = new Date();
+                var y = current.getFullYear().toString();
+                var m = (current.getMonth() + 1).toString();
+                var d = current.getDate().toString();
+                var h = current.getHours().toString();
+                var mi = current.getMinutes().toString();
+                var ampm1 = h >= 12 ? 'pm' : 'am';
+                h = h % 12;
+                h = h ? h : 12;
+                m = m < 10 ? '0' + m : m;
+
+                let finalCurrentDate = d + "." + m + "." + y + "." + " " + h + ":" + mi + " " + ampm1;
+                let parts1 = finalCurrentDate.split(/[\s.:]/);
+                let mydate1 = new Date(parts1[2], parts1[1] - 1, parts1[0], parts1[4], parts1[5]);
+
+                console.log(finalCurrentDate);
+                for(var i = 0; i < array.length; i++) {
+                    console.log(i);
+                    var parts3 = array[i].expiration_date.split(/[\s.:]/);
+                    var mydate4 = new Date(parts3[2], parts3[1] - 1, parts3[0], parts3[4], parts3[5]);
+                    console.log(mydate4);
+                    if(mydate1 >= mydate4) {
+                        appFactory.deleteKajmak(array[i], function (data) {
+                        console.log("Kajmak obrisan");
+                        });
+                    }
+                }  
+            });
+        }
     }
 });
 
 app.controller("createKajmakCtrl", function ($scope, appFactory) {
     $scope.recordKajmak = function () {
-        console.log("kliknuto recordKajmak");
         var trenutniDatum = new Date();
         var year = trenutniDatum.getFullYear().toString();
         var month = (trenutniDatum.getMonth() + 1).toString();
@@ -108,8 +136,6 @@ app.controller("createKajmakCtrl", function ($scope, appFactory) {
         }
 
         $scope.kajmak.expirationDate = day + "." + month + "." + year + "." + " " + hour + ":" + min + " " + ampm;
-
-
         appFactory.recordKajmak($scope.kajmak, function (data) {
             //$scope.create_kajmak = data;
             console.log("Podaci iz create kajmaka:" + data);
@@ -121,10 +147,8 @@ app.controller("createKajmakCtrl", function ($scope, appFactory) {
 
 app.controller("listKajmakCtrl", ["$scope", "$interval","appFactory", "myService", function ($scope, $interval, appFactory, myService) {
     $scope.queryAllKajmak = function () {
-        console.log("listaaa");
+        var array = [];
         appFactory.queryAllKajmak(function (data) {
-            console.log("vdjksg");
-            var array = [];
             for (var i = 0; i < data.length; i++) {
                 parseInt(data[i].Key);
                 data[i].Record.Key = parseInt(data[i].Key);
@@ -134,56 +158,18 @@ app.controller("listKajmakCtrl", ["$scope", "$interval","appFactory", "myService
                 return parseFloat(a.Key) - parseFloat(b.Key);
             });
             $scope.all_kajmak = array;
+            console.log(array);
         });
     }
     $scope.getDetails = function (index) {
-        console.log(index);
         var kajmakDetails = $scope.all_kajmak[index];
-        console.log(kajmakDetails);
         myService.setJson(kajmakDetails);
     }
     $scope.deleteKajmak = function (index) {
         var kajmak = $scope.all_kajmak[index];
-        console.log(kajmak);
         appFactory.deleteKajmak(kajmak, function (data) {
             console.log("Kajmak obrisan");
         })
-    }
-
-    $interval(callAtInterval, 60000);
-
-    function callAtInterval() {
-        console.log("Interval occurred");
-        var nizKajmaka = $scope.all_kajmak;
-        console.log(nizKajmaka);
-        var current = new Date();
-        var y = current.getFullYear().toString();
-        var m = (current.getMonth() + 1).toString();
-        var d = current.getDate().toString();
-        var h = current.getHours().toString();
-        var mi = current.getMinutes().toString();
-        var ampm1 = h >= 12 ? 'pm' : 'am';
-        h = h % 12;
-        h = h ? h : 12;
-        m = m < 10 ? '0' + m : m;
-
-        let finalProductionDate = d + "." + m + "." + y + "." + " " + h + ":" + mi + " " + ampm1;
-        let parts1 = finalProductionDate.split(/[\s.:]/);
-        let mydate1 = new Date(parts1[2], parts1[1] - 1, parts1[0], parts1[4], parts1[5]);
-
-        console.log(mydate1);
-        console.log(finalProductionDate);
-        for(var i = 0; i < nizKajmaka.length; i++) {
-            console.log(i);
-            var parts3 = nizKajmaka[i].expiration_date.split(/[\s.:]/);
-            var mydate4 = new Date(parts3[2], parts3[1] - 1, parts3[0], parts3[4], parts3[5]);
-            console.log(mydate4);
-            if(mydate1 >= mydate4) {
-                appFactory.deleteKajmak(nizKajmaka[i], function (data) {
-                console.log("Kajmak obrisan");
-             });
-            }
-        }
     }
 }]);
 
@@ -193,16 +179,13 @@ app.controller("detailsCtrl", ["$scope", "appFactory", "myService", function ($s
     $scope.changeOwner = function () {
         $scope.owner.id = $scope.myreturnedData.Key;
         appFactory.changeOwner($scope.owner, function (data) {
-            console.log("promijenjen vlasnik");
         });
     }
 }]);
 
 app.controller("mixKajmakCtrl", ["$scope", "appFactory", "myService", function ($scope, appFactory, myService) {
     $scope.queryAllKajmak = function () {
-        console.log("listaaa");
         appFactory.queryAllKajmak(function (data) {
-            console.log("vdjksg");
             var array = [];
             for (var i = 0; i < data.length; i++) {
                 parseInt(data[i].Key);
@@ -227,9 +210,7 @@ app.controller("mixKajmakCtrl", ["$scope", "appFactory", "myService", function (
     }
     $scope.mixKajmak = function () {
         var prvi = myService.getKajmak1();
-        console.log(prvi);
         var drugi = myService.getKajmak2();
-        console.log(drugi);
         var kolicina1 = Number(prvi.quantity);
         var kolicina2 = Number(drugi.quantity);
         var sumaKolicina = kolicina1 + kolicina2;
@@ -291,7 +272,6 @@ app.controller("mixKajmakCtrl", ["$scope", "appFactory", "myService", function (
             expirationDate: finalExpirationDate,
 
         }
-        console.log(newKajmak);
         appFactory.recordKajmak(newKajmak, function (data) {
             //$scope.create_kajmak = data;
             console.log("U redu");
@@ -310,7 +290,6 @@ app.controller("mixKajmakCtrl", ["$scope", "appFactory", "myService", function (
 app.factory('appFactory', function ($http) {
     var factory = {};
     factory.queryAllKajmak = function (callback) {
-        console.log("uslo");
         $http.get('/get_all_kajmak/').success(function (output) {
             callback(output)
         });
