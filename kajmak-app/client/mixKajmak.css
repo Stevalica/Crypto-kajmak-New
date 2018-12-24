@@ -46,7 +46,7 @@
 .form {
     border: solid #bf9b30 3px;
     background-color: black;
-    width: 40%;
+    width: 45%;
     font-size: 20px;
     color: #bf9b30;
     padding-top:10px;
@@ -54,7 +54,7 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-select {
+input, select {
     font-size: 20px;
     width: 90%;
     margin-top: 10px;
@@ -63,6 +63,8 @@ select {
     color: black;
     background-color: #eaeaea;
 }
+
+
 
 .mix {
     background: #bf9b30;
@@ -89,4 +91,22 @@ select {
 .footer h3 {
     color: #aadb12;
     text-align: center;
+}
+
+.bell {
+    float:right;
+    border: solid white 1px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+img {
+    width:30px;
+    height:30px;
+}
+
+.notification {
+    background-color: black;
+    border-radius: 25px;
+    margin-right: 15px;
 }

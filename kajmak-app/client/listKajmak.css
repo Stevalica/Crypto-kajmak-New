@@ -112,3 +112,22 @@ td img {
     background-color: black;
     height: 10%;
 }
+
+
+.bell {
+    float:right;
+    border: solid white 1px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+img {
+    width:30px;
+    height:30px;
+}
+
+.notification {
+    background-color: black;
+    border-radius: 25px;
+    margin-right: 15px;
+}

@@ -1,0 +1,99 @@
+.container {
+    border: solid white 1px;
+    height: 90%;
+    overflow: auto;
+}
+
+.menu {
+    float:left;
+    width:20%;
+    text-align:center;
+    height: 100%;
+}
+
+.menu a {
+    background-color:black;
+    border: solid #bf9b30 1px;
+    padding-top: 70px;
+    margin-top:7px;
+    display:block;
+    width:100%;
+    color: #bf9b30;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-weight: bold;
+    height: 32%;
+}
+
+.table  {
+    margin-top:  7px;
+    margin-left:auto; 
+    margin-right:auto;
+    color:  #b5b4bb;
+    padding-top: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-collapse: collapse;
+   
+
+}
+.bell { 
+    float:left;
+    border: solid white 1px;
+    width:80%;
+    padding:0 20px;
+    height: 100%;
+    text-align: center;
+}
+    
+thead {
+    background-color:black;
+    color: #bf9b30;
+    text-transform: uppercase;
+    height: 50px;
+}
+
+tbody {
+    font-size: 20px;
+    padding: 7px;
+    background-color:  #7a777d;
+}
+
+tr {
+    border-left: 0px solid;
+    height: 50px;
+}
+
+th {
+    width: 300px;
+   
+}
+
+td  {
+    text-decoration: none;
+    color: #bf9b30;
+    height: 20px;
+    
+}
+td a {
+    text-decoration: none;
+    color: black;
+}
+
+td img {
+    height: 50px;
+    
+}
+.approve , .reject , img{
+    background-color: #7a777d;
+    border: none;
+}
+
+
+
+
+
+
+
+
+
+

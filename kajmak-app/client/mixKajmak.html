@@ -5,6 +5,13 @@
         <a href="#listKajmak">list kajmak</a>
         <a class="active" href="#mixKajmak" ng-click="queryAllKajmak()">mix kajmak</a>
     </div>
+    <div class="bell">
+        <a href="#kajmakNotification">
+            <button class="notification">
+                <img src="https://cdn4.iconfinder.com/data/icons/web-icons-19/711/notification-icon-tm-512.png" alt="notification">
+            </button>
+        </a>
+    </div>
             
     <div class="main">
         <h2>Mix Kajmak</h2>
@@ -14,11 +21,16 @@
             	<option value="">
                 <option ng-repeat="kajmak in all_kajmak" ng-click="getKajmak1($index)"> {{ kajmak.name }}
             </select><br>
+            Choose Percentage of First Kajmak: <br>
+            <input type="text" placeholder="Ex: 40" ng-model="kajmak.percentage1"><br>
             Choose Second Kajmak:<br>
             <select>
             	<option value="">
                 <option ng-repeat="kajmak in all_kajmak" ng-click="getKajmak2($index)"> {{ kajmak.name }}
-            </select><br><br>
+            </select><br>
+            Choose Percentage of Second Kajmak: <br>
+            <input type="text" placeholder="Ex: 60" ng-model="kajmak.percentage2"><br><br>
+
             <input class="mix" type="submit" value="Mix" ng-click="mixKajmak()">
         </form>
      </div>

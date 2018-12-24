@@ -22,6 +22,10 @@ app.config(function ($routeProvider) {
         .when("/details", {
             templateUrl: "details.html",
             controller: "detailsCtrl"
+        })
+        .when("/kajmakNotification", {
+             templateUrl: "kajmakNotification.html",
+             controller: "kajmakNotificationCtrl"
         });
 });
 
@@ -174,6 +178,8 @@ app.controller("listKajmakCtrl", ["$scope", "$interval","appFactory", "myService
 }]);
 
 
+
+
 app.controller("detailsCtrl", ["$scope", "appFactory", "myService", function ($scope, appFactory, myService) {
     $scope.myreturnedData = myService.getJson();
     $scope.changeOwner = function () {
@@ -213,7 +219,14 @@ app.controller("mixKajmakCtrl", ["$scope", "appFactory", "myService", function (
         var drugi = myService.getKajmak2();
         var kolicina1 = Number(prvi.quantity);
         var kolicina2 = Number(drugi.quantity);
-        var sumaKolicina = kolicina1 + kolicina2;
+        var percentage1 = parseInt($scope.kajmak.percentage1);
+        var percentage2 = parseInt($scope.kajmak.percentage2);
+
+        var quantity1 = kolicina1 * (percentage1 / 100);
+        var quantity2 = kolicina2 * (percentage2 / 100);
+
+        var sumaKolicina = quantity1 + quantity2 ;
+        
 
         var parts1 = prvi.expiration_date.split(/[\s.:]/);
         var mydate1 = new Date(parts1[2], parts1[1] - 1, parts1[0], parts1[4], parts1[5]);
